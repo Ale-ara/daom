@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faça parte da Ordem Militar</title>
+    <link
+    rel="icon"
+    href="https://www.habbo.com.br/habbo-imaging/badge/b09134s43114s41194f74f3131b8a5c9311558ee0f561db7e0.gif"
+  />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            overflow: hidden; /* Evita barras de rolagem durante a exibição do container de boas-vindas */
+            background: #16221e; /* Cor de fundo sólida */
+        }
+        .intro-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            font-size: 1.5em;
+            text-align: center;
+            z-index: 1000; /* Garante que o container de boas-vindas esteja sobre o restante do conteúdo */
+            transition: opacity 1s ease-in-out;
+        }
+        .main-container {
+            display: none; /* Inicialmente oculto */
+            height: 100vh;
+            padding: 20px;
+            overflow: auto;
+        }
+        .title {
+            font-size: 2.5em;
+            margin-top: 50px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        .character {
+            margin: 20px;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+        }
+        .character img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            animation: shine 2s infinite;
+        }
+        .character p {
+            margin-top: 10px;
+            font-size: 1.2em;
+        }
+        @keyframes shine {
+            0% {
+                box-shadow: 0 0 10px #16221e;
+            }
+            50% {
+                box-shadow: 0 0 20px #16221e;
+            }
+            100% {
+                box-shadow: 0 0 10px #16221e;
+            }
+        }
+        .image-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .image-container img {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(transparent);
+        }
+    </style>
+</head>
+<body>
+    <div class="intro-container" id="intro">
+        <p>Olá membro, vamos fazer parte da melhor subcompanhia da RCC? Veja nossos aplicadores.</p>
+    </div>
+    <div class="main-container" id="main">
+       
+        
+        <div class="image-container">
+            <img src="https://i.imgur.com/Ia0xXDf.png" alt="Imagem de Divulgação">
+        </div>
+        <!-- Container para os personagens -->
+        <div id="characters-container"></div>
+    </div>
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('intro').style.opacity = '0';
+                document.getElementById('intro').style.visibility = 'hidden';
+                document.getElementById('main').style.display = 'block';
+                
+               // Puxa os dados dos personagens
+fetch('https://script.google.com/macros/s/AKfycbyzByIBY_qR5J2obtXq5D1OB3tF_b-N_wqb-kkhYmmGUIgqzi1wM4niOHTsKKV2CWT7/exec')
+    .then(response => response.json())
+    .then(data => {
+        const container = document.getElementById('characters-container');
+        data.forEach(character => {
+            if (character.name) { // Verifica se o nome não está vazio
+                const characterDiv = document.createElement('div');
+                characterDiv.className = 'character';
+                characterDiv.innerHTML = `
+                    <img src="https://www.habbo.com.br/habbo-imaging/avatarimage?img_format=png&user=${encodeURIComponent(character.name)}&direction=3&head_direction=3&size=l&gesture=sml&action=std" alt="${character.name}">
+                    <p>${character.name}</p>
+                `;
+                container.appendChild(characterDiv);
+            }
+        });
+    })
+    .catch(error => console.error('Erro ao carregar dados dos personagens:', error));
+            }, 3000); // Tempo de exibição do container de boas-vindas em milissegundos
+        });
+    </script>
+</body>
+</html>
